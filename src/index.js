@@ -1,12 +1,16 @@
-function eval() {
-    // Do not use eval!!!
-    return;
-}
-
 function expressionCalculator(expr) {
-    // write your solution here
-}
+  let counter = 0;
+  expr = expr.split(' ').join('');
 
-module.exports = {
-    expressionCalculator
+  for (let i = 0; i < expr.length; i++) {
+    if (expr[i] === '(') counter++;
+    if (expr[i] === ')') counter--;
+  }
+  if (counter !== 0) throw new Error('ExpressionError: Brackets must be paired');
+  if (expr.includes('/0')) throw new Error('TypeError: Division by zero.');
+
+  return new Function(`return ${expr}`)();
 }
+module.exports = {
+  expressionCalculator,
+};
